@@ -2,9 +2,13 @@
  * Created by JayaKrishna on 10/11/2016.
  */
 import { Component } from '@angular/core';
+import { NotesCard } from '../ui';
 
 @Component({
     selector: 'notes-container',
+    directives: [
+        NotesCard
+    ],
     styles: [`
         .notes {
           padding-top: 50px;
@@ -20,11 +24,13 @@ import { Component } from '@angular/core';
           </div>
           <div class="notes col-xs-8">
             <div class="row between-xs">
-              note card here
+              <notes-card [note]="note"></notes-card>
             </div>
           </div>
         </div>
     `
 })
 
-export class Notes{}
+export class Notes {
+    note = {title: 'new title', value: 'note here'};
+}
