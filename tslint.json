@@ -2,6 +2,7 @@
   "rules": {
     "class-name": true,
     "comment-format": [true, "check-space"],
+    "class-name": false,
     "curly": true,
     "eofline": true,
     "forin": true,
@@ -36,9 +37,9 @@
       "check-else",
       "check-whitespace"
     ],
-    "quotemark": [true],
+    "quotemark": false,
     "radix": true,
-    "semicolon": [false],
+    "semicolon": true,
     "object-literal-sort-keys": false,
     "triple-equals": [true, "allow-null-check"],
     "variable-name": false,
