@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
+import { Main } from './containers';
 
 @Component({
     selector:'app',
+    directives: [ Main ],
     template:`
         <div>
-            <h3>Hello World !!</h3>
+            <main-container></main-container>
         </div>
     `
 })
