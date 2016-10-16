@@ -63,7 +63,10 @@ export class NoteCreator{
 
     createNewNote() {
         console.log('submitted');
-        this.createNote.next(this.newNote);
-        this.reset();
+        const {title, value} = this.newNote;
+        if (title && value) {
+            this.createNote.next({title, value});
+            this.reset();
+        }
     }
 };
