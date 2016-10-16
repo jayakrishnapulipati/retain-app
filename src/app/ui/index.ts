@@ -3,3 +3,4 @@
  */
 export { AppBar } from './app-bar';
 export { NotesCard } from './notes-card'
+export { NoteCreator } from './note-creator';
