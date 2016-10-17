@@ -3,8 +3,11 @@
  */
 import { Component, Output, EventEmitter } from '@angular/core';
 
+import { ColorPicker } from './color-picker';
+
 @Component({
     selector: 'note-creator',
+    directives: [ ColorPicker ],
     styles: [`
         .note-creator {
           padding: 20px;
@@ -17,7 +20,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
         }
     `],
     template: `
-        <div class="note-creator shadow-2">
+        <div class="note-creator shadow-2" [ngStyle]="{'background-color': newNote.color}">
           <pre>{{newNote | json}}</pre>
           <form class="row" (submit)="createNewNote()">
             <input
@@ -26,6 +29,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
               name="newNoteTitle"
               placeholder="Title"
               class="col-xs-10 title"
+              *ngIf="fullForm"
             >
             <input
               type="text"
@@ -33,8 +37,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
               name="newNoteValue"
               placeholder="Take a note..."
               class="col-xs-10"
+              (focus)="toggle(true)"
             >
-            <div class="actions col-xs-12 row between-xs">
+            <div class="actions col-xs-12 row between-xs" *ngIf="fullForm">
+                <color-picker [colors]="colors" (select)="onColorSelect($event)"></color-picker>
               <button
                 type="submit"
                 class="btn-light"
@@ -48,25 +54,37 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 
 export class NoteCreator{
+    colors: Array<string> = ['red', 'green', 'yellow', 'pink', 'blue', 'navy'];
     @Output() createNote = new EventEmitter();
     newNote = {
         title: '',
-        value: ''
+        value: '',
+        color: 'white'
     };
+    fullForm: boolean = false;
 
     reset() {
         this.newNote = {
             title: '',
-            value: ''
+            value: '',
+            color: 'white'
         };
+    }
+
+    toggle(value: boolean) {
+        this.fullForm = value;
     }
 
     createNewNote() {
         console.log('submitted');
-        const {title, value} = this.newNote;
-        if (title && value) {
-            this.createNote.next({title, value});
+        const {title, value, color} = this.newNote;
+        if (title && value && color) {
+            this.createNote.next({title, value, color});
             this.reset();
         }
+    }
+
+    onColorSelect(color: string) {
+        this.newNote.color = color;
     }
 };
